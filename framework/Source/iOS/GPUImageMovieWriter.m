@@ -376,14 +376,15 @@ NSString *const kGPUImageColorSwizzlingFragmentShaderString = SHADER_STRING
         
         if (CMTIME_IS_INVALID(startTime))
         {
-            runSynchronouslyOnContextQueue(_movieWriterContext, ^{
-                if ((audioInputReadyCallback == NULL) && (assetWriter.status != AVAssetWriterStatusWriting))
-                {
-                    [assetWriter startWriting];
-                }
-                [assetWriter startSessionAtSourceTime:currentSampleTime];
-                startTime = currentSampleTime;
-            });
+            // https://github.com/BradLarson/GPUImage/issues/52#issuecomment-28334743
+            // runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+            //     if ((audioInputReadyCallback == NULL) && (assetWriter.status != AVAssetWriterStatusWriting))
+            //     {
+            //         [assetWriter startWriting];
+            //     }
+            //     [assetWriter startSessionAtSourceTime:currentSampleTime];
+            //     startTime = currentSampleTime;
+            // });
         }
 
         if (!assetWriterAudioInput.readyForMoreMediaData && _encodingLiveVideo)
